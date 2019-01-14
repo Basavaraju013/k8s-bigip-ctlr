@@ -6,6 +6,11 @@ git:
   # don't limit git clone depth
   depth: false
 
+matrix:
+  include:
+    - os: linux
+    - os: linux-ppc64le
+
 before_install:
   - docker pull golang:1.11.1
   - docker pull node:6.11.0-slim
