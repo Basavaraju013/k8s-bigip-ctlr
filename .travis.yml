@@ -13,7 +13,7 @@ matrix:
 
 before_install:
   - docker pull golang:1.11.1
-  - docker pull node:6.11.0-slim
+  - docker pull node:8.15.0-slim
   - docker pull f5devcentral/containthedocs
 
 script:
