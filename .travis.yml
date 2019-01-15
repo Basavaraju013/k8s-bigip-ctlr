@@ -10,7 +10,6 @@ matrix:
   include:
     - os: linux
     - os: linux-ppc64le
-      go: "1.11.1"
 
 before_install:
   - docker pull golang:1.11.1
