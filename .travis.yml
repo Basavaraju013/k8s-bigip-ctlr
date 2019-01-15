@@ -10,6 +10,7 @@ matrix:
   include:
     - os: linux
     - os: linux-ppc64le
+      go: "1.11.1"
 
 before_install:
   - docker pull golang:1.11.1
@@ -50,7 +51,7 @@ script:
   - export CLEAN_BUILD=true
   - export BASE_OS=debian
   - make verify
-  - travis_wait make prod
+  - make prod
   - docker tag "$IMG_TAG" "$BASE_PUSH_TARGET:devel-$TRAVIS_BRANCH"
   - docker tag "$IMG_TAG" "$BASE_PUSH_TARGET:devel-$TRAVIS_BRANCH-n-$TRAVIS_BUILD_NUMBER-id-$TRAVIS_BUILD_ID"
   - |
