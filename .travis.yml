@@ -73,7 +73,7 @@ script:
     fi
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    make docs
+      make docs
     fi
 deploy:
   - provider: script
