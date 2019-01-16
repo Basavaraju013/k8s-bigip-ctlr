@@ -149,8 +149,8 @@ tmpdir_for_test() {
   # Copy over mounted src to our writable src
   if [[ "$(go env GOARCH)" == "amd64" ]]; then
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-  else
-  rsync -rlptgo --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/srcD
+else
+  rsync -a  --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   fi 
   echo $WKDIR
 }
