@@ -70,8 +70,9 @@ script:
       docker push "$BASE_PUSH_TARGET:$BUILD_VERSION-$BUILD_INFO"
       docker push "$BASE_PUSH_TARGET:latest"
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        make docs
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+       make docs
     fi
 
 deploy:
