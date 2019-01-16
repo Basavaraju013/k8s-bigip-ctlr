@@ -16,10 +16,8 @@ before_install:
   - docker pull node:8.15.0-slim
   - docker pull f5devcentral/containthedocs
   - sudo apt-get install -y curl
-  - if [[ "$TRAVIS_OS_NAME" == "linux-ppc64le" ]]; then
-        sudo apt-get remove -y rsync;
-        sudo apt-get install -y rsync=3.1.0;
-    fi
+  - sudo apt-get remove -y rsync
+  - sudo apt-get install -y rsync=3.1.0
 script:
   - set -e
   - docker run --rm -it -v `pwd`:`pwd` -w `pwd` node:8.15.0-slim build-tools/schema-tests.sh
