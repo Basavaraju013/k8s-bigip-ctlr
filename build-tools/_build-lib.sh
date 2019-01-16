@@ -150,7 +150,7 @@ tmpdir_for_test() {
   if [[ "$(go env GOARCH)" == "amd64" ]]; then
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   else
-  mv $GOPATH/src/ $WKDIR/src
+  rsync -rlptgo --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/srcD
   fi 
   echo $WKDIR
 }
