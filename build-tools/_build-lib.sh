@@ -147,6 +147,10 @@ tmpdir_for_test() {
   # src dir to follow gopath convention
   mkdir -p $WKDIR/src
   # Copy over mounted src to our writable src
-  rsync -r --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+  if [[ "$(go env GOARCH)" == "amd64" ]]; then
+  rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+  else
+  cp -ar $GOPATH/src/ $WKDIR/src
+  fi 
   echo $WKDIR
 }
