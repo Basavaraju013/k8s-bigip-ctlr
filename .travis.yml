@@ -19,7 +19,6 @@ before_install:
         sudo apt-get purge rsync;
         sudo apt-get install rsync=3.1.0;
     fi
-
 script:
   - set -e
   - docker run --rm -it -v `pwd`:`pwd` -w `pwd` node:8.15.0-slim build-tools/schema-tests.sh
@@ -71,7 +70,9 @@ script:
       docker push "$BASE_PUSH_TARGET:$BUILD_VERSION-$BUILD_INFO"
       docker push "$BASE_PUSH_TARGET:latest"
     fi
-#  - make docs
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        make docs
+    fi
 
 deploy:
   - provider: script
