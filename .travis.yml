@@ -71,10 +71,7 @@ script:
       docker push "$BASE_PUSH_TARGET:$BUILD_VERSION-$BUILD_INFO"
       docker push "$BASE_PUSH_TARGET:latest"
     fi
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      make docs
-    fi
+ # - make docs
 deploy:
   - provider: script
     skip_cleanup: true
@@ -83,7 +80,7 @@ deploy:
       repo: F5Networks/k8s-bigip-ctlr
       condition: $TRAVIS_BRANCH == *"-stable" || "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]*
     script:
-      - travis_wait 50 /bin/bash -c './build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION'
+      - ./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION
 
 notifications:
   slack:
