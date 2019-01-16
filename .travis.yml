@@ -71,7 +71,9 @@ script:
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     make docs
     fi
-
+before_deploy:
+- curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
+- chmod 755 travis_wait
 deploy:
   - provider: script
     skip_cleanup: true
@@ -80,7 +82,7 @@ deploy:
       repo: F5Networks/k8s-bigip-ctlr
       condition: $TRAVIS_BRANCH == *"-stable" || "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]*
     script:
-      - ./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION
+      - ./travis_wait "./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION"
 
 notifications:
   slack:
