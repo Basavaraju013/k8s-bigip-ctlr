@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		wget \
 		bash \
 		git \
+		curl \
 		rsync \
 		procps \
 	&& rm -rf /var/lib/apt/lists/*
