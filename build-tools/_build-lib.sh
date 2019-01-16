@@ -146,9 +146,7 @@ tmpdir_for_test() {
   local WKDIR=$(mktemp -d $BUILDDIR/tmpXXXXXX)
   # src dir to follow gopath convention
   mkdir -p $WKDIR/src
-  sudo curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
-  chmod 755 travis_wait
   # Copy over mounted src to our writable src
- ./travis_wait 30 rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+  rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   echo $WKDIR
 }
