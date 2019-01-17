@@ -146,7 +146,7 @@ tmpdir_for_test() {
   local WKDIR=$(mktemp -d $BUILDDIR/tmpXXXXXX)
   # src dir to follow gopath convention
   mkdir -p $WKDIR/src
-  while sleep 5m; do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done &
+  while sleep 10m; do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done &
   # Copy over mounted src to our writable src
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   kill %1
