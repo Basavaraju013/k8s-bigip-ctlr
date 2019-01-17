@@ -149,6 +149,6 @@ tmpdir_for_test() {
   while sleep 10m; do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done &
   # Copy over mounted src to our writable src
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-  kill %1
+  pkill sleep
   echo $WKDIR
 }
