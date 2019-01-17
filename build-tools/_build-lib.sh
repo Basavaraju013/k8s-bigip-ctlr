@@ -146,13 +146,9 @@ tmpdir_for_test() {
   local WKDIR=$(mktemp -d $BUILDDIR/tmpXXXXXX)
   # src dir to follow gopath convention
   mkdir -p $WKDIR/src
-  if [ "$(go env GOARCH)" == "ppc64le" ]; then
-      #rsync takes few mins to sync on ppc64le so adding sleep
-      while sleep 10m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
-      rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-      pkill sleep #killed sleep process
-  else  
-      rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-  fi
+  #rsync takes few mins to sync on ppc64le so adding sleep
+  while sleep 10m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
+  rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+  pkill sleep #killed sleep process
   echo $WKDIR
 }
