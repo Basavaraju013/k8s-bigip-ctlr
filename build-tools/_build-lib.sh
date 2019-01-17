@@ -146,9 +146,13 @@ tmpdir_for_test() {
   local WKDIR=$(mktemp -d $BUILDDIR/tmpXXXXXX)
   # src dir to follow gopath convention
   mkdir -p $WKDIR/src
-  while sleep 10m; do echo "=====[ $SECONDS seconds, buildroot still building... ]====="; done &
+  if [ "$(go env GOARCH)" == "amd64" ]; then
   # Copy over mounted src to our writable src
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-  pkill sleep
+  else #rsync takes few mins to sync on ppc64le so adding sleep 
+   while sleep 10m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
+   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+   pkill sleep #killed sleep process
+  fi
   echo $WKDIR
 }

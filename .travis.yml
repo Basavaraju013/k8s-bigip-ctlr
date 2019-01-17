@@ -15,12 +15,6 @@ before_install:
   - docker pull golang:1.11.1
   - docker pull node:8.15.0-slim
   - docker pull f5devcentral/containthedocs
-  - sudo apt-get install -y curl
-  - if [[ "$TRAVIS_OS_NAME" == "linux-ppc64le" ]]; then
-        apt-get purge -y rsync;
-        apt-get install -y rsync=3.1.0;
-    fi
-
 script:
   - set -e
   - docker run --rm -it -v `pwd`:`pwd` -w `pwd` node:8.15.0-slim build-tools/schema-tests.sh
@@ -73,16 +67,12 @@ script:
       docker push "$BASE_PUSH_TARGET:latest"
     fi
  # - make docs
-#before_deploy:
-#- curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
-#- chmod 755 travis_wait
 deploy:
   - provider: script
     skip_cleanup: true
     on:
       all_branches: true
-      #repo: F5Networks/k8s-bigip-ctlr
-      repo: Basavaraju013/k8s-bigip-ctlr
+      repo: F5Networks/k8s-bigip-ctlr
       condition: $TRAVIS_BRANCH == *"-stable" || "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]*
     script:
       - ./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION
