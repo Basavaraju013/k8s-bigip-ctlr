@@ -84,7 +84,7 @@ deploy:
     script: 
       - curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
       - chmod 755 travis_wait
-      - ./travis_wait 50 sh -c "./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION"
+      - ./travis_wait 50 /bin/bash -c './build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION'
 
 notifications:
   slack:
