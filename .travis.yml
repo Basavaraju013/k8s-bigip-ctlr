@@ -73,6 +73,9 @@ script:
       docker push "$BASE_PUSH_TARGET:latest"
     fi
  # - make docs
+before_deploy:
+- curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
+- chmod 755 travis_wait
 deploy:
   - provider: script
     skip_cleanup: true
@@ -82,9 +85,7 @@ deploy:
       repo: Basavaraju013/k8s-bigip-ctlr
       condition: $TRAVIS_BRANCH == *"-stable" || "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]*
     script: 
-      - curl -O https://raw.githubusercontent.com/m3t/travis_wait/master/travis_wait
-      - chmod 755 travis_wait
-      - ./travis_wait 50 /bin/bash -c './build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION'
+      - ./travis_wait 50 "./build-tools/deploy-docs.sh publish-product-docs-to-prod connectors/k8s-bigip-ctlr $CTLR_VERSION"
 
 notifications:
   slack:
