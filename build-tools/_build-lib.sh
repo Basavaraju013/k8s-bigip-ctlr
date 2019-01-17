@@ -152,6 +152,7 @@ tmpdir_for_test() {
   else #rsync takes few mins to sync on ppc64le so adding sleep
    while sleep 8m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
    rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+   pkill sleep #killing sleep process
   fi
   echo $WKDIR
 }
