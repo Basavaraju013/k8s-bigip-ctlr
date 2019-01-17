@@ -66,7 +66,8 @@ script:
       docker push "$BASE_PUSH_TARGET:$BUILD_VERSION-$BUILD_INFO"
       docker push "$BASE_PUSH_TARGET:latest"
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make docs;  fi #f5devcentral/attributions-generator:latest docker image available only for x86.
+  - export OS_NAME=`uname -m`
+  - if [[ "$OS_NAME" == "x86_64" ]]; then make docs;  fi #f5devcentral/attributions-generator:latest docker image available only for x86.
         #TO DO, https://github.com/F5Networks/k8s-bigip-ctlr/issues/806
 deploy:
   - provider: script
