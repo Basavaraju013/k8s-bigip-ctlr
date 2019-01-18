@@ -28,7 +28,6 @@ PKGIMPORT="github.com/F5Networks/k8s-bigip-ctlr"
 
 if [[ $BUILD_VERSION == "" ]]; then
   echo "Must set BUILD_VERSION"
-  echo "testing 123"  
   false
 fi
 if [[ $BUILD_INFO == "" ]]; then
