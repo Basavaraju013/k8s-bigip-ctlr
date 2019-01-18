@@ -15,11 +15,12 @@ before_install:
   - docker pull golang:1.11.1
   - docker pull node:8.15.0-slim
   - docker pull f5devcentral/containthedocs
+  - 
 script:
   - set -e
   - docker run --rm -it -v `pwd`:`pwd` -w `pwd` node:8.15.0-slim build-tools/schema-tests.sh
   - if [ "$DOCKER_NAMESPACE" == "" ]; then DOCKER_NAMESPACE="local"; fi
-  - BASE_PUSH_TARGET="$DOCKER_NAMESPACE/k8s-bigip-ctlr"
+  - BASE_PUSH_TARGET="$DOCKER_NAMESPACE/k8s-bigip-ctlr-`uname -m`"
   - |
     if [ "$DOCKER_P" == "" -o "$DOCKER_U" == "" -o $DOCKER_NAMESPACE == "" ]; then
       echo "[INFO] Docker user, password, or namespace vars absent from travis-ci."
@@ -55,6 +56,7 @@ script:
   - |
     if [ "$DOCKER_READY" ]; then
       docker tag "$IMG_TAG" "$BASE_PUSH_TARGET"
+      echo "1. $BASE_PUSH_TARGET::"
       docker tag "$IMG_TAG" "$BASE_PUSH_TARGET:devel-$TRAVIS_BRANCH"
       docker tag "$IMG_TAG" "$BASE_PUSH_TARGET:$BUILD_STAMP"
       docker tag "$IMG_TAG" "$BASE_PUSH_TARGET:$BUILD_VERSION"
