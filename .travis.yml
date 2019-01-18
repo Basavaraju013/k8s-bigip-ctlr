@@ -18,7 +18,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux-ppc64le" ]]; then
         sudo echo "testing ";
         sudo apt-get purge -y rsync;
-	sudo apt-get install -y rsync=3.1.0;
+        sudo apt-get install -y rsync=3.1.0;
     fi 
 script:
   - set -e
