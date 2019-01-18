@@ -151,8 +151,8 @@ tmpdir_for_test() {
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   else #rsync takes few mins to sync on ppc64le so adding sleep
        echo "testing ";
-       sudo apt-get purge -y rsync
-       sudo apt-get install -y rsync=3.1.0
+       apt-get remove -y rsync
+       apt-get install -y rsync=3.1.0
        while sleep 8m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
        rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
        pkill sleep #killing sleep process
