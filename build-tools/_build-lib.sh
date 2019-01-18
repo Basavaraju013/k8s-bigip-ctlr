@@ -150,9 +150,12 @@ tmpdir_for_test() {
   # Copy over mounted src to our writable src
   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
   else #rsync takes few mins to sync on ppc64le so adding sleep
-   while sleep 8m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
-   rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
-   pkill sleep #killing sleep process
+       echo "testing ";
+       sudo apt-get purge -y rsync
+       sudo apt-get install -y rsync=3.1.0
+       while sleep 8m; do echo "=====[ $SECONDS seconds, rsync still in progress.. ]====="; done &
+       rsync -a --exclude '.git' --exclude '_docker_workspace' $GOPATH/src/ $WKDIR/src
+       pkill sleep #killing sleep process
   fi
   echo $WKDIR
 }
